@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Text to Speech</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; padding: 1rem;
+        }
+        .container {
+            background: white; padding: 2rem; border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%; max-width: 640px;
+        }
+        h1 { text-align: center; color: #333; margin-top: 0; }
+        .subtitle { text-align: center; color: #888; margin-bottom: 1.5rem; font-size: 14px; }
+        textarea {
+            width: 100%; height: 160px; padding: 12px;
+            border: 2px solid #e0e0e0; border-radius: 10px;
+            font-size: 16px; font-family: inherit; resize: vertical;
+            transition: border-color 0.2s;
+        }
+        textarea:focus { outline: none; border-color: #667eea; }
+        .controls {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 1rem; margin-top: 1.2rem;
+        }
+        label { display: block; margin-bottom: 0.4rem; font-weight: 600; color: #555; font-size: 14px; }
+        select, input[type="range"] {
+            width: 100%; padding: 8px; border-radius: 8px;
+            border: 2px solid #e0e0e0; font-size: 14px;
+        }
+        select:focus { outline: none; border-color: #667eea; }
+        .full-width { grid-column: span 2; }
+        button {
+            grid-column: span 2; padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; border-radius: 10px;
+            font-size: 17px; font-weight: 600; cursor: pointer;
+            margin-top: 1rem; transition: transform 0.15s, box-shadow 0.15s;
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+        audio { width: 100%; margin-top: 1.2rem; display: none; }
+        .status { text-align: center; margin-top: 1rem; font-size: 14px; color: #888; min-height: 20px; }
+        .status.error { color: #e53e3e; }
+        .status.success { color: #38a169; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔊 Free Text to Speech</h1>
+        <p class="subtitle">Unlimited text. No signup. No limits.</p>
+
+        <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+
+        <div class="controls">
+            <div class="full-width">
+                <label for="voiceSelect">Voice</label>
+                <select id="voiceSelect"></select>
+            </div>
+            <div>
+                <label for="rateRange">Speed: <span id="rateValue">1.0</span>x</label>
+                <input type="range" id="rateRange" min="0.5" max="2" step="0.1" value="1">
+            </div>
+            <div>
+                <label for="pitchRange">Pitch: <span id="pitchValue">0</span>Hz</label>
+                <input type="range" id="pitchRange" min="-50" max="50" step="5" value="0">
+            </div>
+            <button id="generateBtn">Generate Speech</button>
+        </div>
+
+        <audio id="audioPlayer" controls></audio>
+        <div class="status" id="status"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
